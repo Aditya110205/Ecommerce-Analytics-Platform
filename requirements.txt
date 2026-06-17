@@ -5,3 +5,5 @@ pymysql
 pandas
 faker
 pytest
+httpx
+gunicorn

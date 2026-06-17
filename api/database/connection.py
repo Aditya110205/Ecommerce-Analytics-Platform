@@ -1,8 +1,19 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "3306")
+DB_USER = os.getenv("DB_USER", "root")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "123456")
+DB_NAME = os.getenv("DB_NAME", "ecommerce")
+
 DATABASE_URL = (
-    "mysql+pymysql://root:123456@localhost:3306/ecommerce"
+    f"mysql+pymysql://"
+    f"{DB_USER}:{DB_PASSWORD}"
+    f"@{DB_HOST}:{DB_PORT}"
+    f"/{DB_NAME}"
 )
 
 engine = create_engine(
@@ -11,7 +22,7 @@ engine = create_engine(
 )
 
 SessionLocal = sessionmaker(
-    autocommit=False,
+    bind=engine,
     autoflush=False,
-    bind=engine
+    autocommit=False
 )
